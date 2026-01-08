@@ -1,0 +1,76 @@
+# Product Marketplace API
+
+## Overview
+This project is a **backend application** for managing products in a business context. Built with **Django and Django REST Framework (DRF)**, it allows businesses to create, update, and manage products, with an approval workflow before products become public. 
+
+Key features include:
+- CRUD operations for products
+- Product approval workflow (`draft`, `pending`, `approved`)
+- Business association for products
+- User-based ownership of products
+- Timestamped product creation
+
+This backend serves as the foundation for a product management system, which can later integrate with a frontend application.
+
+---
+
+## Technologies Used
+- **Python 3.11+** – Core programming language
+- **Django 4.x** – Backend web framework
+- **Django REST Framework (DRF)** – RESTful API development 
+- **SQLite** (development database)
+- **Git** – Version control and collaboration
+
+---
+
+## Getting Started
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/baisoft-product-marketplace/backend.git
+cd backend
+
+## 2. Create a virtual Environment
+python -m venv venv
+source venv/bin/activate   # Linux/macOS
+venv\Scripts\activate      # Windows
+
+## 3. Install dependencies 
+pip install -r requirements.txt
+
+## 4.Apply database migrations
+python manage.py migrate
+
+## 5. Run the development server 
+python manage.py runserver
+The backend will be accessible at http://localhost:8000/
+
+## 6. Implementation Details
+
+Product Model
+
+Fields: name, description, price, status, business, created_by, created_at
+
+Status workflow: draft → pending → approved
+
+ProductViewSet
+
+Handles authenticated CRUD operations for products
+
+Only owners of products can modify them
+
+Uses DRF ModelViewSet with proper permissions
+
+PublicProductViewSet
+
+Read-only view for listing approved products
+
+Accessible to all users without authentication
+
+Routing
+
+Uses DefaultRouter to automatically register products and public/products endpoints
+
+## Atim Monica – https://github.com/ATIM-MONICA
+
+
