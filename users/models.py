@@ -18,15 +18,8 @@ class User(AbstractUser):
     )
 
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
-    # business = models.ForeignKey(
-    #     Business,
-    #     on_delete=models.CASCADE,
-    #     related_name='users',
-    #     null=True,
-    #     blank=True
-    # )
     business = models.ForeignKey(
-    'marketplace.Business',  # string reference avoids circular import
+    Business,  
     on_delete=models.CASCADE,
     related_name='users',
     null=True,

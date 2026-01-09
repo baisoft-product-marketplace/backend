@@ -1,51 +1,79 @@
-# Product Marketplace API
+Product Marketplace API
+Overview
+This project is a backend application for managing products in a business context. Built with Django and Django REST Framework (DRF), it provides a RESTful API for businesses to create, update, and manage products with an approval workflow before products become publicly visible.
 
-## Overview
-This project is a **backend application** for managing products in a business context. Built with **Django and Django REST Framework (DRF)**, it allows businesses to create, update, and manage products, with an approval workflow before products become public. 
+This backend serves as the foundation for a product management system and is designed to integrate seamlessly with frontend applications, such as the Product Marketplace Dashboard UI mockup.
 
-Key features include:
-- CRUD operations for products
-- Product approval workflow (`draft`, `pending`, `approved`)
-- Business association for products
-- User-based ownership of products
-- Timestamped product creation
+Key Features
+CRUD Operations – Full create, read, update, and delete functionality for products
+Approval Workflow – Three-stage status progression: draft → pending → approved
+Business Association – Products are linked to specific businesses
+User Ownership – Track product creators with user-based ownership
+Timestamped Records – Automatic creation timestamps for audit trails
+Role-Based Permissions – Secure access control for different user types
+Public API Endpoint – Separate read-only access for approved products
 
-This backend serves as the foundation for a product management system, which can later integrate with a frontend application.
+Technologies Used
+Python 3.11+ – Core programming language
+Django 4.x – High-level web framework for rapid development
+Django REST Framework (DRF) – Powerful toolkit for building Web APIs
+SQLite – Lightweight database for development (easily swappable for production)
+Git – Version control and collaboration
 
----
 
-## Technologies Used
-- **Python 3.11+** – Core programming language
-- **Django 4.x** – Backend web framework
-- **Django REST Framework (DRF)** – RESTful API development 
-- **SQLite** (development database)
-- **Git** – Version control and collaboration
-
----
-
-## Getting Started
-
-### 1. Clone the repository
-```bash
+Getting Started
+Prerequisites
+Python 3.11 or higher installed
+pip (Python package manager)
+Git
+A code editor (VS Code, PyCharm, etc.)
+1. Clone the Repository
 git clone https://github.com/baisoft-product-marketplace/backend.git
 cd backend
 
-## 2. Create a virtual Environment
+2. Create a Virtual Environment
+# Create virtual environment
 python -m venv venv
-source venv/bin/activate   # Linux/macOS
-venv\Scripts\activate      # Windows
 
-## 3. Install dependencies 
+# Activate virtual environment
+# On Linux/macOS:
+source venv/bin/activate
+
+# On Windows:
+venv\Scripts\activate
+
+# You should see (venv) in your terminal prompt
+
+3. Install Dependencies
 pip install -r requirements.txt
 
-## 4.Apply database migrations
+Expected dependencies:
+Django
+djangorestframework
+django-cors-headers (for frontend integration)
+django-filter (optional, for advanced filtering)
+python-decouple (optional, for environment variables)
+
+4. Apply Database Migrations
+# Create database tables
 python manage.py migrate
 
-## 5. Run the development server 
-python manage.py runserver
-The backend will be accessible at http://localhost:8000/
+# You should see output confirming migrations were applied
 
-## 6. Implementation Details
+5. Create a Superuser (Admin Account)
+python manage.py createsuperuser
+
+# Follow the prompts to create an admin account
+# Username: admin
+# Email: admin@example.com
+# Password: (choose a secure password)
+
+6. Run the Development Server
+python manage.py runserver
+
+# Server will start at http://127.0.0.1:8000/
+
+Implementation Details
 
 Product Model
 
@@ -71,7 +99,16 @@ Routing
 
 Uses DefaultRouter to automatically register products and public/products endpoints
 
-## Author
+Author
 Atim Monica – https://github.com/ATIM-MONICA
+
+Changelog
+Version 1.0.0 (Current)
+Initial release
+Product CRUD operations
+Approval workflow (draft/pending/approved)
+User authentication and permissions
+Public products endpoint
+Business association
 
 
