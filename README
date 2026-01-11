@@ -73,7 +73,73 @@ python manage.py runserver
 
 # Server will start at http://127.0.0.1:8000/
 
-Implementation Details
+Role Assignment
+
+Business Admins assign roles to users.
+
+New users registering via the API (POST /api/users/register/) default to viewer role.
+
+Admin users can promote viewer users to editor or approver via Django shell.
+
+Assigning Roles via Django Shell
+python manage.py shell
+
+
+1. Create a business
+
+from users.models import Business
+biz = Business.objects.create(name="TechCorp")
+
+
+2. Create a new user as a viewer
+
+from users.models import User
+new_user = User.objects.create_user(username="jane", password="pass123", business=biz)
+print(new_user.role)  # Output: 'viewer'
+
+
+3. Admin assigns a new role
+
+user = User.objects.get(username="jane")
+user.role = "editor"  # or "approver" or "admin"
+user.save()
+
+
+4. Verify users
+
+User.objects.all()
+
+
+Assumptions & Limitations:
+
+Role assignment is currently done via shell, not yet implemented in API endpoints for admins.
+
+Each user must belong to a business.
+
+Superuser is separate from business-level roles.
+
+# Testing
+
+Run all tests:
+
+python manage.py test
+
+
+Testing Details:
+
+Tests cover CRUD operations, approval workflow, and role-based access control
+
+Example test cases:
+
+Editors can create products but cannot approve
+
+Approvers can approve products
+
+Users can only see products belonging to their business
+
+Some tests may fail if roles or business associations are not correctly created
+
+# Implementation Details
 
 Product Model
 
@@ -85,7 +151,7 @@ ProductViewSet
 
 Handles authenticated CRUD operations for products
 
-Only owners of products can modify them
+Only owners can modify their products
 
 Uses DRF ModelViewSet with proper permissions
 
@@ -95,9 +161,21 @@ Read-only view for listing approved products
 
 Accessible to all users without authentication
 
-Routing
+# Routing
 
-Uses DefaultRouter to automatically register products and public/products endpoints
+Uses DefaultRouter to register /products/ and /public-products/ endpoints
+
+# Tech Decisions, Assumptions, and Limitations
+
+Decision: Role-based permissions are implemented at the DRF ViewSet level.
+
+Decision: Products are linked to businesses and users to enforce ownership.
+
+Assumption: Admin of a business manually assigns roles via shell for now.
+
+Limitation: Role assignment API endpoints were not built due to time constraints and a power outage during refinement.
+
+Limitation: Only basic filtering (min_price, max_price, status) is implemented.
 
 Author
 Atim Monica – https://github.com/ATIM-MONICA

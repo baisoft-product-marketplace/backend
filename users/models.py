@@ -1,29 +1,37 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
-from marketplace.models import Business
+from django.db import models
+
+
+class Business(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    class Meta:
+        verbose_name_plural = "Businesses"
+
+    def __str__(self):
+        return self.name
 
 
 class User(AbstractUser):
-    """
-    Custom user model.
-    Each user belongs to a business and has a role
-    that determines permissions within the system.
-    """
+    class Role(models.TextChoices):
+        ADMIN = "admin", "Admin"
+        EDITOR = "editor", "Editor"
+        APPROVER = "approver", "Approver"
+        VIEWER = "viewer", "Viewer"
 
-    ROLE_CHOICES = (
-        ('admin', 'Admin'),
-        ('editor', 'Editor'),
-        ('approver', 'Approver'),
-        ('viewer', 'Viewer'),
+    business = models.ForeignKey(
+        Business,
+        on_delete=models.CASCADE,
+        related_name="users",
+        null=True,
+        blank=True,
+    )
+    role = models.CharField(
+        max_length=20,
+        choices=Role.choices,
+        default=Role.VIEWER,
     )
 
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
-    business = models.ForeignKey(
-    Business,  
-    on_delete=models.CASCADE,
-    related_name='users',
-    null=True,
-    blank=True
-)
-
+    def __str__(self):
+        return f"{self.username} [{self.role}]"
 

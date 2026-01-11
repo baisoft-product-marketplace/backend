@@ -1,8 +1,19 @@
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import ProductViewSet, PublicProductViewSet
 
-router = DefaultRouter()
-router.register('products', ProductViewSet, basename='products')
-router.register('public/products', PublicProductViewSet, basename='public-products')
+app_name = "marketplace"
 
-urlpatterns = router.urls
+# DRF router for Product endpoints
+router = DefaultRouter()
+router.register("products", ProductViewSet, basename="product"),
+router.register('public-products', PublicProductViewSet, basename='public-product')
+
+urlpatterns = [
+    path("", include(router.urls)),
+]
+
+
+
+
+

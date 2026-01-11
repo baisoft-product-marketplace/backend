@@ -3,11 +3,27 @@ from .models import Product
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    """
-    Serializer for product CRUD operations.
-    """
+    created_by = serializers.StringRelatedField(read_only=True)
+    business = serializers.StringRelatedField()
 
     class Meta:
         model = Product
-        fields = '__all__'
-        read_only_fields = ['created_by', 'business', 'status']
+        fields = [
+            "id",
+            "name",
+            "description",
+            "price",
+            "status",
+            "created_by",
+            "business",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = [
+            "created_by",
+            "business",
+            "status",
+            "created_at",
+            "updated_at",
+        ]
+
